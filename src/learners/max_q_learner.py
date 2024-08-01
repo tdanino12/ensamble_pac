@@ -257,14 +257,15 @@ class MAXQLearner:
         entropy_loss = -D.Normal(self.s_mu, self.s_sigma).log_prob(m_sample_out).sum() / mask.sum()
         comm_beta = 0.001
         comm_entropy_beta= 1e-6
+        '''
         comm_loss = expressiveness_loss + comm_beta * compactness_loss + comm_entropy_beta * entropy_loss
         comm_loss *= self.args.c_beta *0.01
-
+        '''
         self.policy_optimiser.zero_grad()
         policy_loss.backward(retain_graph=True)
         self.policy_optimiser.step()
 
-        loss =  self.args.qmix_loss * qmix_loss + self.args.central_loss * central_loss + comm_loss
+        loss =  self.args.qmix_loss * qmix_loss + self.args.central_loss * central_loss #+ comm_loss
 
 
 
