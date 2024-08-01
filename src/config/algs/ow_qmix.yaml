@@ -23,7 +23,7 @@ comm_beta: 0.001
 comm_entropy_beta: 1e-6
 gate_loss_beta: 0.00001
 only_downstream: False
-use_IB: True
+use_IB: False
 is_print: False
 
 is_comm_beta_decay: False
