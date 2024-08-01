@@ -31,7 +31,7 @@ class MAXQLearner:
         self.log_alpha =th.tensor(args.alpha_init, dtype=th.float32,requires_grad=True)
         self.log_alpha.requires_grad=True
         # self.alpha = th.ones(1, dtype=th.float32)
-        self.alpha = th.tensor(0.2, dtype=th.float32) # just for init use
+        self.alpha = th.tensor(0, dtype=th.float32) #th.tensor(0.2, dtype=th.float32) # just for init use
         self.alpha_optimizer = th.optim.Adam([self.log_alpha], lr=1e-4)
 
         self.params = list(self.critic_mac.parameters())
@@ -293,8 +293,10 @@ class MAXQLearner:
         alpha_loss.backward()
         self.alpha_optimizer.step()
         # self.alpha = self.log_alpha.exp()
+        '''
         self.alpha = self.alpha_optimizer.param_groups[0]['params'][0].exp()
-
+        '''
+        
         if t_env < 2000000:
             self.alpha = th.clamp(self.alpha, max = 0.999)
         # if 2000000< t_env < 3500000:
