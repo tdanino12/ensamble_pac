@@ -10,7 +10,7 @@ import sys
 import torch as th
 from utils.logging import get_logger
 import yaml
-
+from gym.utils import seeding
 from run import REGISTRY as run_REGISTRY
 
 SETTINGS['CAPTURE_MODE'] = "fd" # set to "no" if you want to see stdout/stderr in console
@@ -25,11 +25,20 @@ results_path = join(dirname(dirname(abspath(__file__))), "results")
 
 @ex.main
 def my_main(_run, _config, _log):
+    '''
     # Setting the random seed throughout the modules
     config = config_copy(_config)
     np.random.seed(config["seed"])
     th.manual_seed(config["seed"])
     config['env_args']['seed'] = config["seed"]
+    '''
+    config = config_copy(_config)
+    config["seed"] = config['env_args']['seed']
+    np.random.seed(config["seed"])
+    th.manual_seed(config["seed"])
+    seeding.np_random(config["seed"])
+    os.environ["PYTHONHASHSEED"] =str(config["seed"])
+
     
     # run
     if "use_per" in _config and _config["use_per"]:
