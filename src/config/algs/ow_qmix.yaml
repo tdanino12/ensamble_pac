@@ -5,6 +5,9 @@ epsilon_finish: 0.05
 epsilon_anneal_time: 100000 #100000
 # 50000 -> 1000000??
 
+wandb_project: "diversity11so_many_baneling"
+wandb_group: "ensamble_updated!!"
+
 runner: "parallel"
 batch_size_run: 8
 buffer_size: 5000
