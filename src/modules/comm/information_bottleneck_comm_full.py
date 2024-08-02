@@ -28,6 +28,6 @@ class IBFComm(nn.Module):
 
 		mu = gaussian_params
 		#sigma = F.softplus(gaussian_params[:, self.args.comm_embed_dim * self.n_agents:])
-		sigma = th.ones(mu.shape).cuda()
+		sigma = th.ones(mu.shape)
 
 		return mu, sigma
