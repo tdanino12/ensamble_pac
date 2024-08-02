@@ -124,7 +124,7 @@ class MAXQLearner:
                 logits_out.append(logits)
                 m_sample_out.append(m_sample)
             else:
-                critic_agent_outs = self.critic_mac.forward(batch, t=t)
+                critic_agent_outs, (mu, sigma), logits, m_sample = self.critic_mac.forward(batch, t=t)
             critic_mac_out.append(critic_agent_outs)
         critic_mac_out = th.stack(critic_mac_out, dim=1)  # Concat over time
         if self.args.use_IB:
@@ -248,15 +248,15 @@ class MAXQLearner:
 
             # th.cuda.empty_cache()
         label_target_actions =  cur_max_actions_cGlobalMax[:,:-1]
-        expressiveness_loss = 0
-        label_prob = th.gather(logits_out, 3, label_target_actions).squeeze(3)
-        expressiveness_loss += (-th.log(label_prob + 1e-6)).sum() / mask.sum()
+        #expressiveness_loss = 0
+        #label_prob = th.gather(logits_out, 3, label_target_actions).squeeze(3)
+        #expressiveness_loss += (-th.log(label_prob + 1e-6)).sum() / mask.sum()
         # Compute KL divergence
-        compactness_loss = D.kl_divergence(D.Normal(mu_out, sigma_out), D.Normal(self.s_mu, self.s_sigma)).sum() / \
-                           mask.sum()
-        entropy_loss = -D.Normal(self.s_mu, self.s_sigma).log_prob(m_sample_out).sum() / mask.sum()
-        comm_beta = 0.001
-        comm_entropy_beta= 1e-6
+        #compactness_loss = D.kl_divergence(D.Normal(mu_out, sigma_out), D.Normal(self.s_mu, self.s_sigma)).sum() / \
+        #                   mask.sum()
+        #entropy_loss = -D.Normal(self.s_mu, self.s_sigma).log_prob(m_sample_out).sum() / mask.sum()
+        #comm_beta = 0.001
+        #comm_entropy_beta= 1e-6
         '''
         comm_loss = expressiveness_loss + comm_beta * compactness_loss + comm_entropy_beta * entropy_loss
         comm_loss *= self.args.c_beta *0.01
@@ -311,7 +311,7 @@ class MAXQLearner:
         if t_env - self.log_stats_t >= self.args.learner_log_interval:
             self.logger.log_stat("loss", loss.item(), t_env)
             self.logger.log_stat("qmix_loss", qmix_loss.item(), t_env)
-            self.logger.log_stat("comm_loss", comm_loss.item(), t_env)
+            #self.logger.log_stat("comm_loss", comm_loss.item(), t_env)
             self.logger.log_stat("policy_loss", policy_loss.item(), t_env)
             self.logger.log_stat("central_loss", central_loss.item(), t_env)
             self.logger.log_stat("grad_norm", grad_norm, t_env)
