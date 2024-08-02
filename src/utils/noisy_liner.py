@@ -35,9 +35,9 @@ class NoisyLinear(nn.Module):
         torch.Size([128, 30])
     """
     __constants__ = ['in_features', 'out_features']
-    in_features: int
-    out_features: int
-    weight: torch.Tensor
+    in_features = 0
+    out_features = 0
+    weight = None
 
     def __init__(self, in_features: int, out_features: int, bias: bool = True, device: str = 'cpu') -> None:
         super(NoisyLinear, self).__init__()
