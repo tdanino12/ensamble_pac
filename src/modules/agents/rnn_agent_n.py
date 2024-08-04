@@ -31,7 +31,7 @@ class RNNAgentN(nn.Module):
         self.network2 = agent_ensemble_network(input_shape, self.args)
         self.network3 = agent_ensemble_network(input_shape, self.args)
         self.network4 = agent_ensemble_network(input_shape, self.args)
-        self.network5 = agent_ensemble_network(input_shape, sself.args)
+        self.network5 = agent_ensemble_network(input_shape, self.args)
         self.network6 = agent_ensemble_network(input_shape, self.args)
         self.network7 = agent_ensemble_network(input_shape, self.args)
         self.network8 = agent_ensemble_network(input_shape, self.args)
