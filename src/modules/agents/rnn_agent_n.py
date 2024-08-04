@@ -27,16 +27,16 @@ class RNNAgentN(nn.Module):
         super(RNNAgentN, self).__init__()
         self.args = args
 
-        self.network1 = PGCriticNetwork(input_shape, self.args)
-        self.network2 = PGCriticNetwork(input_shape, self.args)
-        self.network3 = PGCriticNetwork(input_shape, self.args)
-        self.network4 = PGCriticNetwork(input_shape, self.args)
-        self.network5 = PGCriticNetwork(input_shape, sself.args)
-        self.network6 = PGCriticNetwork(input_shape, self.args)
-        self.network7 = PGCriticNetwork(input_shape, self.args)
-        self.network8 = PGCriticNetwork(input_shape, self.args)
-        self.network9 = PGCriticNetwork(input_shape, self.args)
-        self.network10 = PGCriticNetwork(input_shape, self.args)    
+        self.network1 = agent_ensemble_network(input_shape, self.args)
+        self.network2 = agent_ensemble_network(input_shape, self.args)
+        self.network3 = agent_ensemble_network(input_shape, self.args)
+        self.network4 = agent_ensemble_network(input_shape, self.args)
+        self.network5 = agent_ensemble_network(input_shape, sself.args)
+        self.network6 = agent_ensemble_network(input_shape, self.args)
+        self.network7 = agent_ensemble_network(input_shape, self.args)
+        self.network8 = agent_ensemble_network(input_shape, self.args)
+        self.network9 = agent_ensemble_network(input_shape, self.args)
+        self.network10 = agent_ensemble_network(input_shape, self.args)    
 
     def init_hidden(self):
         # make hidden states on same device as model
